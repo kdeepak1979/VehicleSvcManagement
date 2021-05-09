@@ -36,7 +36,7 @@ import com.innomind.vehiclesvc.mgmt.repository.DealerDetailRepository;
 import com.innomind.vehiclesvc.mgmt.repository.UserRepository;
 import com.innomind.vehiclesvc.mgmt.service.DealerService;
 
-@EnableScheduling
+//@EnableScheduling
 @SpringBootApplication
 public class VehicleSvcMgmtApplication implements CommandLineRunner{
 
