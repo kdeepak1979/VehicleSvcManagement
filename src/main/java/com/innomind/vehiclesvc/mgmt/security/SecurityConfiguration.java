@@ -38,8 +38,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.GET, "/vehicle/**").hasAnyRole("ADMIN","USER")
         .antMatchers(HttpMethod.POST, "/vehicle/**").hasAnyRole("ADMIN","USER")
         .antMatchers(HttpMethod.PUT, "/vehicle/**").hasAnyRole("ADMIN","USER")
-        .antMatchers(HttpMethod.DELETE, "/vehicle/**").hasAnyRole("ADMIN","USER")
-        .antMatchers(HttpMethod.GET, "/**").hasAnyRole("ADMIN","USER")
+        .antMatchers(HttpMethod.DELETE, "/vehicle/**").hasAnyRole("ADMIN","USER")                
+        .antMatchers(HttpMethod.GET,"/swagger-ui*").permitAll()
         .and().formLogin();
 		http.sessionManagement().maximumSessions(1);
 	}
