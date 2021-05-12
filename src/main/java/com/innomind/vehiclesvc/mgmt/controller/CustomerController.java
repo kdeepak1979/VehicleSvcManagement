@@ -20,17 +20,21 @@ import com.innomind.vehiclesvc.mgmt.dto.CustomerDTO;
 import com.innomind.vehiclesvc.mgmt.entity.Customer;
 import com.innomind.vehiclesvc.mgmt.service.CustometrService;
 
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 public class CustomerController {
 	
 	@Autowired
 	private CustometrService customerService;
 	
-	@GetMapping(path="/customer/")
+	@ApiOperation(value="Finds all customers", notes="It can be used to fetch all the dealer's customer",response=List.class)
+	@GetMapping(path="/customer")
 	public List<CustomerDTO> getAllCustomers(){	
 		return customerService.getAllCustomers();
 	}
 	
+	@ApiOperation(value="Finds customer with given id", notes="Provide an id to look up specific customer",response=CustomerDTO.class)
 	@GetMapping(path="/customer/{id}")
 	public ResponseEntity<CustomerDTO> getCustomerByID(@PathVariable int id) {
 		ResponseEntity<CustomerDTO>  responseEntity = null;
@@ -44,7 +48,8 @@ public class CustomerController {
 	}
 	
 	
-	@PostMapping(path="/customer/")
+	@ApiOperation(value="Adds new customer", notes="Provide custom details to be added in system",response=Void.class)
+	@PostMapping(path="/customer")
 	public ResponseEntity<Void> addCustomer(@RequestBody CustomerDTO customer){
 	    Customer savedCustomer = customerService.addCustomer(customer);	
 	    URI uri = ServletUriComponentsBuilder
@@ -55,8 +60,8 @@ public class CustomerController {
 		return ResponseEntity.created(uri).build();
 	}
 	
-	
-	@PutMapping(path="/customer/")
+	@ApiOperation(value="Updates the existing customer", notes="Provide updated custom details to be saved",response=Void.class)
+	@PutMapping(path="/customer")
 	public ResponseEntity<Void> updateCustomer(@RequestBody CustomerDTO customer){
 		boolean updated = customerService.updateCustomer(customer);
 		ResponseEntity<Void> responseEntity;
@@ -69,6 +74,7 @@ public class CustomerController {
 		
 	}
 	
+	@ApiOperation(value="Deletes customer with given id", notes="Provide customer id to be deleted",response=Void.class)
 	@DeleteMapping(path="/customer/{id}")
 	public ResponseEntity<Void> deleteCustomer(@PathVariable int id){
 		customerService.delete(id);

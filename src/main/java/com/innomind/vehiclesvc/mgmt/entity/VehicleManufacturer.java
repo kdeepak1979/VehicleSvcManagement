@@ -1,6 +1,9 @@
 package com.innomind.vehiclesvc.mgmt.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.*;
 
 
@@ -19,6 +22,9 @@ public class VehicleManufacturer implements Serializable {
 	private int id;
 
 	private String name;
+	
+	@OneToMany(mappedBy="vehicleManufacturer")
+	private List<Vehicle> vehicles = new ArrayList<>();
 
 	public VehicleManufacturer() {
 	}

@@ -25,7 +25,7 @@ public class VehicleService {
 	 * 
 	 * @return
 	 */
-	public List<VehicleDTO> getAllVehicles() {
+	public List<VehicleDTO> getAllVehicles() {		
 		List<VehicleDTO> vehicles = vehicelRepositry.findAll().stream().map(v -> buildDTO(v))
 				.collect(Collectors.toList());
 		return vehicles;

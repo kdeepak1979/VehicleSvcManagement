@@ -2,7 +2,10 @@ package com.innomind.vehiclesvc.mgmt.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -41,6 +44,9 @@ public class Customer implements Serializable {
 	
 	@Column(name="EMAIL_ID")
 	private String emailID;
+	
+	@OneToMany(fetch=FetchType.LAZY,mappedBy="customer")
+	private List<Sale> sales = new ArrayList<>();
 	
 
 	public Customer() {

@@ -33,20 +33,17 @@ public class CustomUserDetails implements UserDetails {
 		this.isExpired = user.isExpired();
 		this.isLocked = user.isLocked();
 		List<UserRole> userRoles = user.getUserRoles();
-		System.out.println("CustomUserDetails.CustomUserDetails() userRoles "+userRoles);
-		System.out.println("CustomUserDetails.CustomUserDetails() userRoles count : "+userRoles.size());
+		
 		for(UserRole role : userRoles) {
 			System.out.println("CustomUserDetails.CustomUserDetails() role : "+role.getRole().getRoleName());
 		}
 		roles = user.getUserRoles().stream().map(r -> r.getRole().getRoleName()).collect(Collectors.toList());
-		System.out.println("CustomUserDetails.CustomUserDetails() "+this);
 	}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {		
 		List<SimpleGrantedAuthority> authorities = roles.stream().map(role -> new SimpleGrantedAuthority("ROLE_"+role))
-				.collect(Collectors.toList());
-		System.out.println("################## CustomUserDetails.getAuthorities() authorities = "+authorities);
+				.collect(Collectors.toList());		
         return authorities;
 	}
 

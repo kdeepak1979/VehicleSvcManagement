@@ -15,9 +15,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.innomind.vehiclesvc.mgmt.dto.CustomerDTO;
 import com.innomind.vehiclesvc.mgmt.dto.Dealer;
 import com.innomind.vehiclesvc.mgmt.entity.User;
 import com.innomind.vehiclesvc.mgmt.service.DealerService;
+
+import io.swagger.annotations.ApiOperation;
 
 @RestController
 public class DealerController {
@@ -25,8 +28,8 @@ public class DealerController {
 	@Autowired
 	private DealerService tenantService;
 	
-	
-	@GetMapping(path="/dealer/")
+	@ApiOperation(value="Finds all Dealers", notes="It can be used to fetch all the dealers",response=List.class)
+	@GetMapping(path="/dealer")
 	public List<Dealer> getAllDealer(){
 		return tenantService.getAllDealers();
 	}
@@ -36,6 +39,7 @@ public class DealerController {
 	 * @param dealerId
 	 * @return
 	 */
+	@ApiOperation(value="Finds dealer with given id", notes="Provide an id to look up specific dealer",response=CustomerDTO.class)
 	@GetMapping(path="/dealer/{dealerId}")
 	public Dealer getDealer(@PathVariable String dealerId) {
 		return tenantService.getDealer(dealerId);
@@ -46,7 +50,8 @@ public class DealerController {
 	 * 
 	 * @param dealer
 	 */
-	@PutMapping(path="/dealer/")
+	@ApiOperation(value="Updates the existing dealer", notes="Provide updated dealer details to be saved",response=Void.class)
+	@PutMapping(path="/dealer")
 	public ResponseEntity<Void> updateDealer(@RequestBody Dealer dealer) {
 		ResponseEntity<Void> responseEntity;
 		boolean updated = tenantService.updateDealer(dealer);
@@ -62,6 +67,7 @@ public class DealerController {
 	 * 
 	 * @param dealer
 	 */
+	@ApiOperation(value="Deletes dealer with given id", notes="Provide dealer id to be deleted",response=Void.class)
 	@DeleteMapping(path="/dealer/{dealerId}")
 	public ResponseEntity<Void>  deleteDealer(@PathVariable String dealerId) {
 		tenantService.deleteDeler(dealerId);
@@ -73,7 +79,8 @@ public class DealerController {
 	 * 
 	 * @param dealer
 	 */
-	@PostMapping(path="/dealer/")
+	@ApiOperation(value="Adds new dealer", notes="Provide dealer details to be added in system",response=Void.class)
+	@PostMapping(path="/dealer")
 	public ResponseEntity<Void> addDealer(@RequestBody Dealer dealer) {
 		User savedTenant = tenantService.addDealer(dealer);
 		System.out.println("DealerController.addDealer() savedTenant "+savedTenant.getUserName());

@@ -1,5 +1,7 @@
 package com.innomind.vehiclesvc.mgmt.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,7 +15,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "dealer_detail")
 @NamedQuery(name = "DealerDetail.findAll", query = "SELECT d FROM DealerDetail d")
-public class DealerDetail {
+public class DealerDetail implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 

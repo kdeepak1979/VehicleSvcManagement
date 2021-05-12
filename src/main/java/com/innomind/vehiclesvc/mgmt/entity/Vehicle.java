@@ -1,13 +1,15 @@
 package com.innomind.vehiclesvc.mgmt.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 
-import org.springframework.context.annotation.Lazy;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
-import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 
 
 /**
@@ -44,6 +46,12 @@ public class Vehicle implements Serializable {
 
 	@Column(name="ENGINE_NO")
 	private String engineNum;
+	
+	@OneToOne(fetch=FetchType.LAZY,mappedBy="vehicle")
+	private VehicleWaranty waranty;	
+	
+	@OneToOne(fetch=FetchType.LAZY,mappedBy="vehicle")
+	private Sale sale;
 
 	public Vehicle() {
 	}
@@ -111,5 +119,31 @@ public class Vehicle implements Serializable {
 	public void setVehicleManufacturer(VehicleManufacturer vehicleManufacturer) {
 		this.vehicleManufacturer = vehicleManufacturer;
 	}
+
+	public String getVehicleClass() {
+		return vehicleClass;
+	}
+
+	public void setVehicleClass(String vehicleClass) {
+		this.vehicleClass = vehicleClass;
+	}
+
+	public VehicleWaranty getWaranty() {
+		return waranty;
+	}
+
+	public void setWaranty(VehicleWaranty waranty) {
+		this.waranty = waranty;
+	}
+	
+
+	public Sale getSale() {
+		return sale;
+	}
+
+	public void setSale(Sale sale) {
+		this.sale = sale;
+	}
+	
 
 }

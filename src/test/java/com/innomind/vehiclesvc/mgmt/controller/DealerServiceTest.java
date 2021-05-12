@@ -24,7 +24,7 @@ import com.innomind.vehiclesvc.mgmt.security.CustomUserDetailService;
 import com.innomind.vehiclesvc.mgmt.security.SchemaService;
 import com.innomind.vehiclesvc.mgmt.service.DealerService;
 
-//@RunWith(MockitoJUnitRunner.class)
+
 @ExtendWith(MockitoExtension.class)
 class DealerServiceTest {
 	

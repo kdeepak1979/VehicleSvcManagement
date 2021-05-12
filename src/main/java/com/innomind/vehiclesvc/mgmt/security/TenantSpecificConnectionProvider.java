@@ -37,7 +37,6 @@ public class TenantSpecificConnectionProvider implements MultiTenantConnectionPr
         final Connection connection = getAnyConnection();
         connection.createStatement()
                 .execute(String.format("SET search_path = \"%s\";", tenantIdentifier));
-        System.out.println("TenantSpecificConnectionProvider.getConnection() "+String.format("SET search_path = \"%s\";", tenantIdentifier));
         return connection;
     }
 
@@ -49,7 +48,7 @@ public class TenantSpecificConnectionProvider implements MultiTenantConnectionPr
     }
 
     @Override
-    public boolean supportsAggressiveRelease() {
+    public boolean supportsAggressiveRelease() {    
         return false;
     }
 

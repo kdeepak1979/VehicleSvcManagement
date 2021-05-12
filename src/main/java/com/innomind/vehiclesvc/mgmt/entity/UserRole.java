@@ -20,7 +20,7 @@ public class UserRole implements Serializable {
 	private int id;
 		
 	@OneToOne(fetch=FetchType.EAGER)	
-	@JoinColumn(name="id")
+	@JoinColumn(name="role")
 	private Role role;
 
 	@ManyToOne

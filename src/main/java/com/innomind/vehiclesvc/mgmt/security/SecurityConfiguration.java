@@ -14,7 +14,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 
 
-//@Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
@@ -22,25 +21,26 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	private CustomUserDetailService userDetailsService;
 
 	@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {		
-		System.out.println("SecurityConfiguration.configure()==============> "+auth);
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {				
 		auth.userDetailsService(userDetailsService);
 	}
 
 	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		System.out.println("SecurityConfiguration.configure()============> "+http);		
+	protected void configure(HttpSecurity http) throws Exception {		
 		http        
         .authorizeRequests()
-        .antMatchers(HttpMethod.GET, "/dealer/**").hasAnyRole("ADMIN")
-        .antMatchers(HttpMethod.GET, "/**").hasAnyRole("ADMIN","USER")
-        .antMatchers(HttpMethod.POST, "/dealer/**").hasAnyRole("ADMIN")
-        .antMatchers(HttpMethod.PUT, "/dealer/**").hasAnyRole("ADMIN")
-        .antMatchers(HttpMethod.DELETE, "/dealer/**").hasAnyRole("ADMIN")
+        .antMatchers(HttpMethod.GET, "/dealer/**").hasRole("DEALER_ADMIN")        
+        .antMatchers(HttpMethod.POST, "/dealer/**").hasRole("DEALER_ADMIN")
+        .antMatchers(HttpMethod.PUT, "/dealer/**").hasRole("DEALER_ADMIN")
+        .antMatchers(HttpMethod.DELETE, "/dealer/**").hasRole("DEALER_ADMIN")
         .antMatchers(HttpMethod.GET, "/waranty/**").hasAnyRole("ADMIN","USER")
         .antMatchers(HttpMethod.POST, "/waranty/**").hasAnyRole("ADMIN","USER")
+        .antMatchers(HttpMethod.GET, "/vehicle/**").hasAnyRole("ADMIN","USER")
+        .antMatchers(HttpMethod.POST, "/vehicle/**").hasAnyRole("ADMIN","USER")
+        .antMatchers(HttpMethod.PUT, "/vehicle/**").hasAnyRole("ADMIN","USER")
+        .antMatchers(HttpMethod.DELETE, "/vehicle/**").hasAnyRole("ADMIN","USER")
+        .antMatchers(HttpMethod.GET, "/**").hasAnyRole("ADMIN","USER")
         .and().formLogin();
-		//only one session will be active for specific user
 		http.sessionManagement().maximumSessions(1);
 	}
 
@@ -57,13 +57,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		return new PasswordEncoder() {
 			@Override
 			public String encode(CharSequence rawPassword) {				
-				System.out.println(String.format("############# SecurityConfiguration.getBcryptEncoder().new PasswordEncoder() {...}.encode() charSequence = %s",rawPassword.toString()));
 				return BCrypt.hashpw(rawPassword.toString(), BCrypt.gensalt(4));
 			}
 
 			@Override
-			public boolean matches(CharSequence rawPassword, String encodedPassword) {
-				System.out.println(String.format("############## SecurityConfiguration.getBcryptEncoder().new PasswordEncoder() {...}.matches() charSequence = %s, s = %s",rawPassword,encodedPassword));				
+			public boolean matches(CharSequence rawPassword, String encodedPassword) {				
 				return BCrypt.checkpw(rawPassword.toString(), encodedPassword);
 			}
 		};

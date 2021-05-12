@@ -1,7 +1,6 @@
 package com.innomind.vehiclesvc.mgmt.security;
 
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,20 +21,9 @@ public class CustomUserDetailService implements UserDetailsService{
 	
 	@Override
 	public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
-		System.out.println("CustomUserDetailService.loadUserByUsername() userId = "+userId);
-		/*List<User> users = userRepository.findAll();
-		System.out.println("CustomUserDetailService.loadUserByUsername() count : "+users.size());
-		for(User user : users ) {
-			System.out.println("CustomUserDetailService.loadUserByUsername() name : "+user.getUserName() +" role : "+user.getUserRoles());
-		}*/
-		Optional<User> user = userRepository.findByUserName(userId);
-		//System.out.println("CustomUserDetailService.loadUserByUsername() credentials = "+user.get());
+		Optional<User> user = userRepository.findByUserName(userId);		
 		user.orElseThrow(() -> new UsernameNotFoundException("User with Id '" + userId + "' not found"));
-		return user.map(CustomUserDetails::new).get();
-		/*(if(true) {
-			throw new UsernameNotFoundException("User with Id '" + userId + "' not found");
-		}
-		return null;*/
+		return user.map(CustomUserDetails::new).get();		
 	}
 
 }

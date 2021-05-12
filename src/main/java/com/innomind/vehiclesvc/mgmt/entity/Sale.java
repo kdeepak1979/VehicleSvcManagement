@@ -21,15 +21,15 @@ public class Sale implements Serializable {
 
 	@Temporal(TemporalType.DATE)
 	@Column(name="INVOICE_DATE")
-	private Date invoiceDate;
-
-	@Column(name="INVENTORY_ID")
-	private String inventoryId;
+	private Date invoiceDate;	
 	
+	@OneToOne	
+	@JoinColumn(name="CHASSIS_NO")
+	private Vehicle vehicle;
+	
+	@Column(name="PRICE")
 	private float price;
-
 	
-	//uni-directional many-to-one association to Customer
 	@ManyToOne
 	@JoinColumn(name="customer_id")
 	private Customer customer;
@@ -38,15 +38,7 @@ public class Sale implements Serializable {
 
 	public Sale() {
 	}	
-	
-	public String getInventoryId() {
-		return this.inventoryId;
-	}
-
-	public void setInventoryId(String inventoryId) {
-		this.inventoryId = inventoryId;
-	}
-
+		
 	public Date getInvoiceDate() {
 		return this.invoiceDate;
 	}
